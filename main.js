@@ -1,4 +1,4 @@
-import { config } from '../../config.js';
+import { config } from './config.js';
 
 document.addEventListener("DOMContentLoaded", function() {
     // First, let's check if the clock element exists
