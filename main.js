@@ -62,7 +62,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     youtubeBox.addEventListener('input', function() {
         const query = youtubeBox.value;
-        const apiKey = config.youtubeApiKey;  // Use the imported config
+        const apiKey = "AIzaSyDYshjmu6S3WNpxPNYn6i9Pouga72uMRdA";  
 
         fetch(`https://www.googleapis.com/youtube/v3/search?key=${apiKey}&q=${encodeURIComponent(query)}&part=snippet&type=video`)
             .then(response => {

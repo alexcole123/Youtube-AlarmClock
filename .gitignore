@@ -12,3 +12,5 @@ Thumbs.db
 
 # Configuration file with API keys
 config.js
+
+.env
