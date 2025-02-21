@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 # Youtube-AlarmClock
 =======
 # YouTube Alarm Clock
@@ -40,4 +40,4 @@ YOUTUBE_API_KEY=your_youtube_api_key_here
 
 ## Security Note
 Never commit your actual API key to the repository. Always use environment variables for sensitive data.
->>>>>>> 541655c (Initial Commit)
+
