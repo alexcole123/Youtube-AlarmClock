@@ -1,5 +1,5 @@
 
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", function () {
     // First, let's check if the clock element exists
     const clockPar = document.getElementById("clockPar");
     if (!clockPar) {
@@ -33,35 +33,35 @@ document.addEventListener("DOMContentLoaded", function() {
 
     function checkAlarm() {
         const now = new Date();
-        const hours = String(now.getHours()).padStart(2, '0');
-        const minutes = String(now.getMinutes()).padStart(2, '0');
-        const currentTime = `${hours}:${minutes}`;
+        const currentHours = now.getHours();
+        const currentMinutes = now.getMinutes();
 
-        if (alarmTimeInput.value === currentTime && selectedVideoId) {
-            playSelectedVideo();
+        const alarmTime = alarmTimeInput.value;
+        if (alarmTime) {
+            const [alarmHours, alarmMinutes] = alarmTime.split(':').map(Number); // Parse alarm time
+
+            if (currentHours === alarmHours && currentMinutes === alarmMinutes && selectedVideoId) {
+                playSelectedVideo();
+                console.log("Alarm triggered!");
+            } else {
+                //console.log(`Current: ${currentHours}:${currentMinutes}, Alarm: ${alarmHours}:${alarmMinutes}`);
+            }
         }
     }
-
     setInterval(checkAlarm, 1000);
 
+
     function playSelectedVideo() {
-        if (selectedVideoId && selectedVideo.src.indexOf(selectedVideoId) === -1) {
-            selectedVideoContainer.style.display = 'block';
-            selectedVideo.src = `https://www.youtube.com/embed/${selectedVideoId}?autoplay=1&mute=1`;
-
-            const timeoutId = setTimeout(() => {
-                console.error('Error loading video');
-            }, 5000);
-
-            selectedVideo.addEventListener('load', function() {
-                clearTimeout(timeoutId);
-            });
+        if (selectedVideoId) {
+            if (!selectedVideo.src.includes(selectedVideoId)) { // Corrected check
+                selectedVideoContainer.style.display = 'block';
+                selectedVideo.src = `https://www.youtube.com/embed/${selectedVideoId}?autoplay=1&mute=0`; // Corrected URL
+            }
         }
     }
-
-    youtubeBox.addEventListener('input', function() {
+    youtubeBox.addEventListener('input', function () {
         const query = youtubeBox.value;
-        const apiKey = "AIzaSyDYshjmu6S3WNpxPNYn6i9Pouga72uMRdA";  
+        const apiKey = "AIzaSyDYshjmu6S3WNpxPNYn6i9Pouga72uMRdA";
 
         fetch(`https://www.googleapis.com/youtube/v3/search?key=${apiKey}&q=${encodeURIComponent(query)}&part=snippet&type=video`)
             .then(response => {
@@ -90,20 +90,20 @@ document.addEventListener("DOMContentLoaded", function() {
                         <p>${videoTitle}</p>
                     `;
 
-                    videoElement.addEventListener('click', function() {
+                    videoElement.addEventListener('click', function () {
                         selectedVideoId = videoId;
-                    
+
                         // Show selected video title inside the page
                         const selectedVideoText = document.createElement("p");
                         selectedVideoText.innerText = `Selected: ${videoTitle}`;
                         selectedVideoContainer.style.display = "block";
-                    
+
                         // Remove old text (if any) and add the new one
                         const existingText = selectedVideoContainer.querySelector("p");
                         if (existingText) existingText.remove();
                         selectedVideoContainer.prepend(selectedVideoText);
                     });
-                    
+
                     videosContainer.appendChild(videoElement);
                 });
             })
@@ -115,7 +115,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // Add the event listener for the name element 
     const nameElement = document.getElementById("nameProducer");
-    nameElement.addEventListener('click', function() {
+    nameElement.addEventListener('click', function () {
         alert("By Alex Cole");
     });
 
